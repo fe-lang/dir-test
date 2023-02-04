@@ -180,7 +180,7 @@ impl DirTestArg {
             return Err(Error::new(Span::call_site(), "`dir` is required"));
         };
 
-        let resolved = self.resolve_path(&Path::new(&dir.value()))?;
+        let resolved = self.resolve_path(Path::new(&dir.value()))?;
 
         if !resolved.is_absolute() {
             return Err(Error::new_spanned(
