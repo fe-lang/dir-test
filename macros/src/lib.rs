@@ -132,19 +132,19 @@ impl TestBuilder {
             test_name.push_str(&postfix.value());
         }
 
-        Ok(syn::Ident::new(&test_name, Span::call_site()))
+        Ok(make_ident(&test_name))
     }
 
     /// Extracts `#[dir_test_attr(...)]` from function attributes.
     fn extract_test_attrs(&mut self) -> Result<()> {
-        let mut attrs = vec![];
         let mut err = Ok(());
         self.func.attrs.retain(|attr| {
             if attr.path.is_ident("dir_test_attr") {
                 err = err
                     .clone()
                     .and(attr.parse_args_with(|input: syn::parse::ParseStream| {
-                        attrs.extend(input.call(syn::Attribute::parse_outer));
+                        self.test_attrs
+                            .extend(input.call(syn::Attribute::parse_outer)?);
                         if !input.is_empty() {
                             Err(Error::new(
                                 input.span(),
@@ -265,4 +265,68 @@ impl syn::parse::Parse for DirTestArg {
 
         Ok(dir_test_attr)
     }
+}
+
+fn make_ident(name: &str) -> syn::Ident {
+    if is_keyword(name) {
+        syn::Ident::new_raw(name, Span::call_site())
+    } else {
+        syn::Ident::new(name, Span::call_site())
+    }
+}
+
+fn is_keyword(name: &str) -> bool {
+    matches!(
+        name,
+        "as" | "break"
+            | "const"
+            | "continue"
+            | "crate"
+            | "else"
+            | "enum "
+            | "extern"
+            | "false"
+            | "fn"
+            | "for"
+            | "if"
+            | "impl"
+            | "in"
+            | "let"
+            | "loop"
+            | "match"
+            | "mod"
+            | "move"
+            | "mut"
+            | "pub"
+            | "ref"
+            | "return"
+            | "self"
+            | "Self"
+            | "static"
+            | "struct"
+            | "super"
+            | "trait"
+            | "true"
+            | "type"
+            | "unsafe"
+            | "use"
+            | "where"
+            | "while"
+            | "async"
+            | "await"
+            | "dyn"
+            | "abstract"
+            | "become"
+            | "box"
+            | "do"
+            | "final"
+            | "macro"
+            | "override"
+            | "priv"
+            | "typeof"
+            | "unsized"
+            | "virtual"
+            | "yield"
+            | "try"
+    )
 }
