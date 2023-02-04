@@ -104,8 +104,6 @@
 //!  ### Test Attributes
 //!  Test attributes can specified by the `dir_test_attr` attribute. The
 //! attributes inside `dir_test_atrr` are applied to the all generated test.
-//! **NOTE**: The `dir_test_attr` attribute must be specified after the
-//! `dir_test`. cases.
 //!
 //! ```rust, no_run
 //! use dir_test::{dir_test, Fixture};
@@ -122,6 +120,9 @@
 //!     // ...
 //! }
 //! ```
+//!
+//! **NOTE**: The `dir_test_attr` attribute must be specified after the
+//! `dir_test`.
 
 /// A fixture contains a file content and its absolute path.
 /// Content type is determined by the loader function specified in
