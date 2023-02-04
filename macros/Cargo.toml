@@ -1,7 +1,12 @@
 [package]
 name = "dir-test-macros"
+authors = ["The Fe Project Developers"]
 version = "0.1.0"
 edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/fe-lang/dir-test"
+description = "Provides a procedural macro for `dir-test`"
+
 
 [lib]
 proc_macro = true
