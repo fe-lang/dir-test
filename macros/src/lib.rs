@@ -1,5 +1,6 @@
 use std::{
     collections::HashSet,
+    ffi::OsStr,
     path::{Path, PathBuf},
 };
 
@@ -179,40 +180,50 @@ impl DirTestArg {
             return Err(Error::new(Span::call_site(), "`dir` is required"));
         };
 
-        let mut resolved = PathBuf::new();
-        for component in Path::new(&dir.value()) {
-            if component.to_string_lossy().starts_with('$') {
-                let env_var = &component.to_string_lossy()[1..];
-                let env_var_value = std::env::var(env_var).map_err(|e| {
-                    Error::new_spanned(
-                        dir.clone(),
-                        format!("failed to resolve env var `{env_var}`: {e}"),
-                    )
-                })?;
-                resolved.push(env_var_value);
-            } else {
-                resolved.push(component);
-            }
-        }
+        let resolved = self.resolve_path(&Path::new(&dir.value()))?;
 
-        if !resolved.is_dir() {
+        if !resolved.is_absolute() {
             return Err(Error::new_spanned(
                 dir.clone(),
-                format!("`{}` is not a directory", resolved.display()),
+                format!("`{}` is not an absolute path", resolved.display()),
             ));
         } else if !resolved.exists() {
             return Err(Error::new_spanned(
                 dir.clone(),
                 format!("`{}` does not exist", resolved.display()),
             ));
-        } else if !resolved.is_absolute() {
+        } else if !resolved.is_dir() {
             return Err(Error::new_spanned(
                 dir.clone(),
-                format!("`{}` is not an absolute path", resolved.display()),
+                format!("`{}` is not a directory", resolved.display()),
             ));
         }
 
         Ok(resolved)
+    }
+
+    fn resolve_path(&self, path: &Path) -> Result<PathBuf> {
+        let mut resolved = PathBuf::new();
+        for component in path {
+            resolved.push(self.resolve_component(component)?);
+        }
+        Ok(resolved)
+    }
+
+    fn resolve_component(&self, component: &OsStr) -> Result<PathBuf> {
+        if component.to_string_lossy().starts_with('$') {
+            let env_var = &component.to_string_lossy()[1..];
+            let env_var_value = std::env::var(env_var).map_err(|e| {
+                Error::new_spanned(
+                    self.dir.clone().unwrap(),
+                    format!("failed to resolve env var `{env_var}`: {e}"),
+                )
+            })?;
+            let resolved = self.resolve_path(Path::new(&env_var_value))?;
+            Ok(resolved)
+        } else {
+            Ok(Path::new(&component).into())
+        }
     }
 }
 

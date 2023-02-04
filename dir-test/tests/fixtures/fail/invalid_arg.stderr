@@ -1,0 +1,11 @@
+error: duplicated arg `dir`
+ --> tests/fixtures/fail/invalid_arg.rs:6:5
+  |
+6 |     dir: "Dup"
+  |     ^^^
+
+error: unknown arg `foo`
+  --> tests/fixtures/fail/invalid_arg.rs:12:5
+   |
+12 |     foo: "fooBar",
+   |     ^^^
