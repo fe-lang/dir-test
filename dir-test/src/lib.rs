@@ -1,23 +1,21 @@
-use std::path::Path;
-
-pub struct Fixture {
-    content: &'static str,
-    path: &'static Path,
+pub struct Fixture<T> {
+    content: T,
+    path: &'static str,
 }
 
-impl Fixture {
+impl<T> Fixture<T> {
     /// Creates a new fixture from the given content and path.
-    pub const fn new(content: &'static str, path: &'static Path) -> Self {
+    pub fn new(content: T, path: &'static str) -> Self {
         Self { content, path }
     }
 
     /// Returns the content of the fixture.
-    pub const fn content(&self) -> &'static str {
-        self.content
+    pub fn content(&self) -> &T {
+        &self.content
     }
 
     /// Returns the absolute path of the fixture.
-    pub const fn path(&self) -> &'static Path {
+    pub const fn path(&self) -> &'static str {
         self.path
     }
 }
