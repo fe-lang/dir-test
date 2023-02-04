@@ -1,11 +1,12 @@
 [package]
 name = "dir-test"
+authors = ["The Fe Project Developers"]
 version = "0.1.0"
 readme = "README.md"
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/fe-lang/dir-test"
-description = "Provides a macro to generate a test from files in a directory"
+description = "Provides a macro to generate tests from files in a directory"
 keywords = ["test", "dir", "directory", "macro"]
 categories = ["development-tools", "filesystem"]
 

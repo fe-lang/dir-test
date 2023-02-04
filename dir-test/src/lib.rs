@@ -57,7 +57,7 @@
 //! }
 //! ```
 //!
-//! **NOTE**: The `dir` argument must be specified as an absolute path because
+//! **NOTE**: The `dir` argument must be specified in an absolute path because
 //! of the limitation of the current procedural macro system. Consider using
 //! environment variables, `dir-test` crate resolves environment variables
 //! internally.
