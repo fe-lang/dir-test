@@ -140,9 +140,14 @@ impl<T> Fixture<T> {
         Self { content, path }
     }
 
-    /// Returns the content of the fixture.
+    /// Returns a reference to the content of the fixture.
     pub fn content(&self) -> &T {
         &self.content
+    }
+
+    /// Consumes the fixture and returns the content.
+    pub const fn into_content(self) -> T {
+        self.content
     }
 
     /// Returns the absolute path of the fixture.
