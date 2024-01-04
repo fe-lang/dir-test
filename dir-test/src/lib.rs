@@ -146,7 +146,7 @@ impl<T> Fixture<T> {
     }
 
     /// Consumes the fixture and returns the content.
-    pub const fn into_content(self) -> T {
+    pub fn into_content(self) -> T {
         self.content
     }
 
