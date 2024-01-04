@@ -1,2 +1,3 @@
 [workspace]
 members = ["dir-test", "macros"]
+resolver = "2"
