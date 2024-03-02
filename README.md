@@ -127,3 +127,18 @@ fn wasm_test(fixture: Fixture<std::io::Result<String>>) {
 **NOTE**: The `dir_test_attr` attribute must be specified after the
 `dir_test`.
 
+### Return Types
+Tests may have a return type, allowing for the [`Result<T, E>`] type to be used in the test.
+See the relevant book link [here](https://doc.rust-lang.org/book/ch11-01-writing-tests.html#using-resultt-e-in-tests).
+
+```rust, no_run
+use dir_test::{dir_test, Fixture};
+
+#[dir_test(
+    dir: "$CARGO_MANIFEST_DIR/fixtures",
+    glob: "**/*.txt",
+)]
+fn test(fixture: Fixture<&str>) -> std::io::Result<()> {
+    // ...
+}
+```
