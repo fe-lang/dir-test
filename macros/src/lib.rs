@@ -86,6 +86,7 @@ impl TestBuilder {
         let test_name = self.test_name(file_path)?;
         let file_path_str = file_path.to_string_lossy();
         let test_func = &self.func.sig.ident;
+        let return_ty = &self.func.sig.output;
         let test_attrs = &self.test_attrs;
 
         let loader = match self.dir_test_arg.loader {
@@ -96,8 +97,8 @@ impl TestBuilder {
         Ok(quote! {
             #(#test_attrs)*
             #[test]
-            fn #test_name() {
-                #test_func(::dir_test::Fixture::new(#loader(#file_path_str), #file_path_str));
+            fn #test_name() #return_ty {
+                #test_func(::dir_test::Fixture::new(#loader(#file_path_str), #file_path_str))
             }
         })
     }
