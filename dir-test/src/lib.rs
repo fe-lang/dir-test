@@ -86,8 +86,8 @@
 //! If the loader function is not specified, the default content type is
 //! `&'static str`.
 //!
-//!  ### Custom Test Name
-//!  Test names can be customized by specifying the `postfix` argument.
+//! ### Custom Test Name
+//! Test names can be customized by specifying the `postfix` argument.
 //! `postfix` is appended to the test name.
 //!
 //! ```rust, no_run
@@ -103,8 +103,8 @@
 //! }
 //! ```
 //!
-//!  ### Test Attributes
-//!  Test attributes can specified by the `dir_test_attr` attribute. The
+//! ### Test Attributes
+//! Test attributes can specified by the `dir_test_attr` attribute. The
 //! attributes inside `dir_test_atrr` are applied to the all generated test.
 //!
 //! ```rust, no_run
@@ -126,9 +126,9 @@
 //! **NOTE**: The `dir_test_attr` attribute must be specified after the
 //! `dir_test`.
 //!
-//!  ### Return Types
-//!  Tests may have a return type, allowing for the [`Result<T, E>`] type to be used in the test.
-//! See the relevant book link
+//! ### Return Types
+//! Tests may have a return type, allowing for the [`Result<T, E>`] type to be
+//! used in the test. See the relevant book link
 //! [here](https://doc.rust-lang.org/book/ch11-01-writing-tests.html#using-resultt-e-in-tests).
 //!
 //! ```rust, no_run
