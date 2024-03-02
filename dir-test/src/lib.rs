@@ -136,7 +136,7 @@
 //!     dir: "$CARGO_MANIFEST_DIR/fixtures",
 //!     glob: "**/*.txt",
 //! )]
-//! fn test(fixture: Fixture<&str>) -> io::Result<()> {
+//! fn test(fixture: Fixture<&str>) -> std::io::Result<()> {
 //!     // ...
 //! }
 //! ```
