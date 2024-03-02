@@ -1,3 +1,5 @@
+#![allow(clippy::test_attr_in_doctest)]
+#![cfg(not(doctest))]
 //! `dir-test` provides a macro to generate single test cases from files in a
 //! directory.
 //!
