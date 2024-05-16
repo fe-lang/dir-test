@@ -83,9 +83,9 @@ impl TestBuilder {
     }
 
     fn build_test(&self, file_path: &Path) -> Result<proc_macro2::TokenStream> {
-        let test_name = self.test_name(file_path)?;
-        let file_path_str = file_path.to_string_lossy();
         let test_func = &self.func.sig.ident;
+        let test_name = self.test_name(test_func.to_string(), file_path)?;
+        let file_path_str = file_path.to_string_lossy();
         let return_ty = &self.func.sig.output;
         let test_attrs = &self.test_attrs;
 
@@ -103,14 +103,16 @@ impl TestBuilder {
         })
     }
 
-    fn test_name(&self, fixture_path: &Path) -> Result<syn::Ident> {
+    fn test_name(&self, test_func_name: String, fixture_path: &Path) -> Result<syn::Ident> {
         assert!(fixture_path.is_file());
 
         let dir_path = self.dir_test_arg.resolve_dir()?;
         let rel_path = fixture_path.strip_prefix(dir_path).unwrap();
         assert!(rel_path.is_relative());
 
-        let mut test_name = String::new();
+        let mut test_name = test_func_name;
+        test_name.push_str("__");
+
         let components: Vec<_> = rel_path.iter().collect();
 
         for component in &components[0..components.len() - 1] {

@@ -19,7 +19,7 @@
 //!     dir: "$CARGO_MANIFEST_DIR/fixtures",
 //!     glob: "**/*.txt",
 //! )]
-//! fn test(fixture: Fixture<&str>) {
+//! fn mytest(fixture: Fixture<&str>) {
 //!     // The file content and the absolute path of the file are available as follows.
 //!     let content = fixture.content();
 //!     let path = fixture.path();
@@ -30,7 +30,7 @@
 //! ```
 //!
 //! Assuming your crate is as follows, then the above code generates two test
-//! cases `foo()` and `fixtures_a_bar()`.
+//! cases `mytest__foo()` and `mytest__fixtures_a_bar()`.
 //!
 //! ```text
 //! my-crate/
@@ -49,13 +49,13 @@
 //!
 //! ```rust, no_run
 //! #[test]
-//! fn foo() {
-//!     test(fixture);
+//! fn mytest__foo() {
+//!     mytest(fixture);
 //! }
 //!
 //! #[test]
-//! fn fixtures_a_bar() {
-//!     test(fixture);
+//! fn mytest__fixtures_a_bar() {
+//!     mytest(fixture);
 //! }
 //! ```
 //!
