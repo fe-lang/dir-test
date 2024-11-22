@@ -50,8 +50,7 @@ impl TestBuilder {
         let mut pattern = self.dir_test_arg.resolve_dir()?;
 
         pattern.push(
-            &self
-                .dir_test_arg
+            self.dir_test_arg
                 .glob
                 .clone()
                 .map_or_else(|| "*".to_string(), |g| g.value()),
