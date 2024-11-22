@@ -6,7 +6,6 @@ use std::{
 
 use proc_macro2::Span;
 use quote::quote;
-
 use syn::Token;
 
 type Error = syn::Error;
@@ -51,8 +50,7 @@ impl TestBuilder {
         let mut pattern = self.dir_test_arg.resolve_dir()?;
 
         pattern.push(
-            &self
-                .dir_test_arg
+            self.dir_test_arg
                 .glob
                 .clone()
                 .map_or_else(|| "*".to_string(), |g| g.value()),
@@ -143,7 +141,7 @@ impl TestBuilder {
     fn extract_test_attrs(&mut self) -> Result<()> {
         let mut err = Ok(());
         self.func.attrs.retain(|attr| {
-            if attr.path.is_ident("dir_test_attr") {
+            if attr.path().is_ident("dir_test_attr") {
                 err = err
                     .clone()
                     .and(attr.parse_args_with(|input: syn::parse::ParseStream| {
