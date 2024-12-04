@@ -9,7 +9,7 @@ Add the following dependency to your `Cargo.toml`.
 
 ``` toml
 [dev-dependencies]
-dir-test = "0.1"
+dir-test = "0.4"
 ```
 
 ### Basic Usage
